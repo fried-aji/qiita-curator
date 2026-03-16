@@ -126,14 +126,15 @@ pnpm dlx playwright test  # Playwright E2Eテスト
 
 | 技術 | バージョン | 用途 |
 |------|-----------|------|
-| Next.js | 15 (App Router) | フレームワーク |
-| TypeScript | latest | 型安全性 |
-| shadcn/ui + TailwindCSS | latest | UIコンポーネント |
+| Next.js | 16 (App Router) | フレームワーク |
+| React | 19 | UIライブラリ |
+| TypeScript | 5 | 型安全性 |
+| shadcn/ui + TailwindCSS | v4（`@import "tailwindcss"` 記法） | UIコンポーネント |
 | TanStack Query | v5 | APIキャッシュ管理（staleTime: 60秒） |
 | Jotai | v2 | グローバルstate（ブックマーク） |
-| Storybook | 8 (Vite builder) | コンポーネントカタログ |
+| Storybook | 10 (nextjs-vite framework) | コンポーネントカタログ |
 | MSW | v2 | APIモック（browser: setupWorker / test: setupServer） |
-| Vitest | latest | 単体テスト（jsdom環境） |
+| Vitest | 4 | 単体テスト（jsdom）+ Storybookテスト（Playwright browser） |
 | Playwright | latest | E2Eテスト（chromium） |
 | GitHub Actions | - | CI（lint + 型チェック + Vitest + E2E） |
 | Vercel | - | ホスティング（mainブランチ自動デプロイ） |

@@ -6,7 +6,7 @@
 
 **Architecture:** Next.js App Router（SSR/SSG）+ TanStack QueryによるAPIキャッシュ管理 + Jotaiによるグローバルstate（ブックマーク）をlocalStorageに永続化。コンポーネントはStorybookで管理し、MSWでAPIをモック化してテストする。
 
-**Tech Stack:** Next.js 15 (App Router) / TypeScript / shadcn/ui (TailwindCSS) / TanStack Query v5 / Jotai v2 / Storybook 8 / MSW v2 / Vitest / Playwright / GitHub Actions / Vercel / pnpm
+**Tech Stack:** Next.js 16 (App Router) / TypeScript / shadcn/ui (TailwindCSS v4) / TanStack Query v5 / Jotai v2 / Storybook 10 / MSW v2 / Vitest 4 / Playwright / GitHub Actions / Vercel / pnpm
 
 ---
 
@@ -165,13 +165,7 @@ export default function Home() {
 }
 ```
 
-`src/app/globals.css` のデフォルトスタイルをTailwindのディレクティブのみに削除：
-
-```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-```
+`src/app/globals.css` はshadcn/ui initが自動生成するTailwind v4形式のまま使用する（`@import "tailwindcss"` がv4の正しい記法）。手動編集不要。
 
 - [ ] **Step 4: 型チェック通過確認**
 
@@ -187,7 +181,6 @@ Expected: エラーなし
 
 **Files:**
 - Create: `components.json`, `src/lib/utils.ts`
-- Modify: `tailwind.config.ts`
 
 - [ ] **Step 1: shadcn/ui 初期化**
 
@@ -234,8 +227,10 @@ export default function Home() {
 - [ ] **Step 1: Storybook インストール**
 
 ```bash
-pnpm dlx storybook@latest init --builder vite
+pnpm dlx storybook@latest init
 ```
+
+Storybook 10はNext.jsプロジェクトを自動検出し `@storybook/nextjs-vite` フレームワークを選択する（`--builder vite` 不要）。
 
 インストール中に `Do you want to run the 'eslintPlugin' fixer?` と聞かれたら `yes`。
 
@@ -247,10 +242,10 @@ rm -rf src/stories
 
 - [ ] **Step 3: TailwindをStorybookに適用**
 
-`.storybook/preview.ts` を以下に変更：
+`.storybook/preview.ts` を以下に変更（Storybook 10は `@storybook/nextjs-vite` を使用）：
 
 ```ts
-import type { Preview } from "@storybook/react";
+import type { Preview } from "@storybook/nextjs-vite";
 import "../src/app/globals.css";
 
 const preview: Preview = {
@@ -957,29 +952,64 @@ export function filterByKeyword(articles: QiitaArticle[], keyword: string): Qiit
 - [ ] **Step 1: Vitest インストール**
 
 ```bash
-pnpm add -D vitest @vitejs/plugin-react jsdom @testing-library/react @testing-library/jest-dom
+pnpm add -D @vitejs/plugin-react @testing-library/react @testing-library/jest-dom
 ```
+
+Storybook initで `vitest` と `playwright` は既にインストール済み。`jsdom` は vitest に内包。
 
 - [ ] **Step 2: Vitest設定**
 
-`vitest.config.ts`:
+`vitest.config.ts`（Storybook 10生成のprojects構造にunit testプロジェクトを追加）：
 
 ```ts
-import { defineConfig } from "vitest/config";
-import react from "@vitejs/plugin-react";
-import path from "path";
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
+import { playwright } from '@vitest/browser-playwright';
+
+const dirname =
+  typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  plugins: [react()],
   test: {
-    environment: "jsdom",
-    globals: true,
-    setupFiles: ["./vitest.setup.ts"],
-  },
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
+    projects: [
+      // Unit tests (jsdom) - filter.test.ts などの純粋関数テスト対象
+      {
+        plugins: [react()],
+        test: {
+          name: 'unit',
+          environment: 'jsdom',
+          globals: true,
+          include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
+          setupFiles: ['./vitest.setup.ts'],
+        },
+        resolve: {
+          alias: {
+            '@': path.resolve(dirname, './src'),
+          },
+        },
+      },
+      // Storybook tests (browser / Playwright)
+      {
+        extends: true,
+        plugins: [
+          storybookTest({ configDir: path.join(dirname, '.storybook') }),
+        ],
+        test: {
+          name: 'storybook',
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright({}),
+            instances: [{ browser: 'chromium' }],
+          },
+          setupFiles: ['.storybook/vitest.setup.ts'],
+        },
+      },
+    ],
   },
 });
 ```
@@ -1171,16 +1201,16 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
 - [ ] **Step 3: layout.tsxにProvidersを適用**
 
-`src/app/layout.tsx`:
+`src/app/layout.tsx`（Next.js 16のデフォルトはGeistフォント。既にインストール済みのためそのまま使用）：
 
 ```tsx
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Header } from "@/components/layout/Header";
 
-const inter = Inter({ subsets: ["latin"] });
+const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Qiita Curator",
@@ -1190,7 +1220,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      <body className={inter.className}>
+      <body className={geist.className}>
         <Providers>
           <Header />
           <main className="container mx-auto px-4 py-6">{children}</main>
