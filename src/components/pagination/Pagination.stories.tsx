@@ -32,3 +32,11 @@ export const LastPage: Story = {
     tag: "React",
   },
 };
+
+export const FewPages: Story = {
+  args: {
+    currentPage: 2,
+    totalPages: 3,
+    tag: "React",
+  },
+};
