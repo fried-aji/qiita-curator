@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm create:*)",
+      "Bash(mkdir /tmp/qiita-curator-backup)",
+      "Bash(mv CLAUDE.md mise.toml docs .claude /tmp/qiita-curator-backup/)",
+      "Bash(pnpm tsc:*)",
+      "Bash(pnpm dlx:*)"
+    ]
+  }
+}
