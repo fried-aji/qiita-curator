@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchArticlesByTag } from "@/lib/qiita";
 
-export function useArticles(tag: string) {
+export function useArticles(tag: string, page = 1) {
   return useQuery({
-    queryKey: ["articles", tag],
-    queryFn: () => fetchArticlesByTag(tag),
+    queryKey: ["articles", tag, page],
+    queryFn: () => fetchArticlesByTag(tag, page),
     enabled: !!tag,
   });
 }

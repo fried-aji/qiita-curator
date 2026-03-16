@@ -32,6 +32,10 @@ export const MOCK_ARTICLES = [
 
 export const qiitaHandlers = [
   http.get("https://qiita.com/api/v2/items", () => {
-    return HttpResponse.json(MOCK_ARTICLES);
+    return HttpResponse.json(MOCK_ARTICLES, {
+      headers: {
+        "X-Total-Count": "3",
+      },
+    });
   }),
 ];

@@ -6,7 +6,7 @@ export async function fetchArticlesByTag(
   tag: string,
   page = 1,
   perPage = 20
-): Promise<QiitaArticle[]> {
+): Promise<{ articles: QiitaArticle[]; totalCount: number }> {
   const params = new URLSearchParams({
     query: `tag:${tag}`,
     page: String(page),
@@ -19,5 +19,7 @@ export async function fetchArticlesByTag(
     throw new Error(`Qiita API error: ${res.status}`);
   }
 
-  return res.json();
+  const totalCount = parseInt(res.headers.get("X-Total-Count") ?? "0", 10);
+  const articles: QiitaArticle[] = await res.json();
+  return { articles, totalCount };
 }
