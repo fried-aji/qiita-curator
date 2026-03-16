@@ -21,7 +21,7 @@ export async function fetchArticlesByTag(
     throw new Error(`Qiita API error: ${res.status}`);
   }
 
-  const totalCount = parseInt(res.headers.get("X-Total-Count") ?? "0", 10);
+  const totalCount = parseInt(res.headers.get("total-count") ?? "0", 10);
   const articles: QiitaArticle[] = await res.json();
   return { articles, totalCount };
 }
