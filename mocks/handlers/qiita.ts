@@ -31,11 +31,10 @@ export const MOCK_ARTICLES = [
 ];
 
 export const qiitaHandlers = [
-  http.get("https://qiita.com/api/v2/items", () => {
-    return HttpResponse.json(MOCK_ARTICLES, {
-      headers: {
-        "total-count": "3",
-      },
+  http.get("*/api/articles", () => {
+    return HttpResponse.json({
+      articles: MOCK_ARTICLES,
+      totalCount: MOCK_ARTICLES.length,
     });
   }),
 ];

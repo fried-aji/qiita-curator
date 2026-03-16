@@ -1,7 +1,5 @@
 import type { QiitaArticle } from "@/types/qiita";
 
-const QIITA_API_BASE = "https://qiita.com/api/v2";
-
 export const PER_PAGE = 20;
 
 export async function fetchArticlesByTag(
@@ -10,18 +8,16 @@ export async function fetchArticlesByTag(
   perPage = PER_PAGE
 ): Promise<{ articles: QiitaArticle[]; totalCount: number }> {
   const params = new URLSearchParams({
-    query: `tag:${tag}`,
+    tag,
     page: String(page),
-    per_page: String(perPage),
+    perPage: String(perPage),
   });
 
-  const res = await fetch(`${QIITA_API_BASE}/items?${params}`);
+  const res = await fetch(`/api/articles?${params}`);
 
   if (!res.ok) {
-    throw new Error(`Qiita API error: ${res.status}`);
+    throw new Error(`API error: ${res.status}`);
   }
 
-  const totalCount = parseInt(res.headers.get("total-count") ?? "0", 10);
-  const articles: QiitaArticle[] = await res.json();
-  return { articles, totalCount };
+  return res.json();
 }
