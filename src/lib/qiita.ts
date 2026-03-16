@@ -2,10 +2,12 @@ import type { QiitaArticle } from "@/types/qiita";
 
 const QIITA_API_BASE = "https://qiita.com/api/v2";
 
+export const PER_PAGE = 20;
+
 export async function fetchArticlesByTag(
   tag: string,
   page = 1,
-  perPage = 20
+  perPage = PER_PAGE
 ): Promise<{ articles: QiitaArticle[]; totalCount: number }> {
   const params = new URLSearchParams({
     query: `tag:${tag}`,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { TagFilter } from "@/components/filter/TagFilter";
@@ -10,6 +10,7 @@ import { Pagination } from "@/components/pagination/Pagination";
 import { useArticles } from "@/hooks/useArticles";
 import { useBookmark } from "@/hooks/useBookmark";
 import { filterByKeyword } from "@/lib/filter";
+import { PER_PAGE } from "@/lib/qiita";
 
 type Props = {
   tag: string;
@@ -21,9 +22,13 @@ export function ArticlesSection({ tag, page }: Props) {
   const [keyword, setKeyword] = useState("");
   const { data, isLoading, isError } = useArticles(tag, page);
 
+  useEffect(() => {
+    setKeyword("");
+  }, [tag]);
+
   const articles = data?.articles ?? [];
   const totalCount = data?.totalCount ?? 0;
-  const totalPages = Math.max(1, Math.ceil(totalCount / 20));
+  const totalPages = Math.max(1, Math.ceil(totalCount / PER_PAGE));
   const filteredArticles = filterByKeyword(articles, keyword);
 
   const { bookmarkedIds, toggle } = useBookmark();
