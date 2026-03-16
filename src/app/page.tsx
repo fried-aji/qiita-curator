@@ -18,6 +18,7 @@ export default function Home() {
 
   return (
     <div className="space-y-6">
+      <h1 className="text-2xl font-bold">技術記事</h1>
       <div className="space-y-3">
         <TagFilter selectedTag={selectedTag} onTagChange={setSelectedTag} />
         <SearchInput value={keyword} onChange={setKeyword} />

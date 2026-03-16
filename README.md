@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Qiita Curator
 
-## Getting Started
+Qiita APIから技術記事を取得し、タグフィルタリング・キーワード検索・ブックマーク機能を提供するWebアプリ。
 
-First, run the development server:
+## デモ
+
+[Vercel URL] ← デプロイ後に更新
+
+## 技術スタック
+
+| 技術 | 選定理由 |
+|------|---------|
+| Next.js 16 (App Router) | SSR/SSGの柔軟な使い分け、ルーティング |
+| TypeScript | 型安全性の確保 |
+| TanStack Query v5 | APIキャッシュ管理（staleTime設定でQiita APIのレート制限に対応） |
+| Jotai v2 | 軽量なglobal state管理。localStorage永続化はatomWithStorageで実現 |
+| shadcn/ui + Tailwind CSS v4 | UIコンポーネントをコードとして管理。Storybookとの相性が良い |
+| Storybook 10 | コンポーネントの独立した開発・確認環境 |
+| MSW v2 | APIモックによるテスト環境の再現 |
+| Vitest 4 | Viteベースの高速テストランナー |
+| Playwright | E2Eテストによる実際のユーザー操作の検証 |
+
+## 機能
+
+- **タグフィルタリング** — React / Next.js / TypeScript など技術タグで記事を絞り込み
+- **キーワード検索** — タイトルのリアルタイムフィルタリング
+- **ブックマーク** — localStorage に永続化。ページリロード後も保持
+
+## 開発
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`http://localhost:3000` にアクセス。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## テスト
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm test              # Vitest（単体テスト + Storybookテスト）
+pnpm exec playwright test  # E2Eテスト（Playwright）
+```
 
-## Learn More
+## Storybook
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm storybook
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`http://localhost:6006` でコンポーネントカタログを確認。
