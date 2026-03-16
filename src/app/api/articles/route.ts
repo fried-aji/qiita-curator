@@ -1,16 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PER_PAGE } from "@/lib/qiita";
+import { ALL_TAG, DEFAULT_TAGS } from "@/components/filter/TagFilter";
 
 const QIITA_API_BASE = "https://qiita.com/api/v2";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
-  const tag = searchParams.get("tag") ?? "React";
+  const tag = searchParams.get("tag") ?? ALL_TAG;
   const page = searchParams.get("page") ?? "1";
   const perPage = searchParams.get("perPage") ?? String(PER_PAGE);
 
+  const query =
+    tag === ALL_TAG
+      ? DEFAULT_TAGS.map((t) => `tag:${t}`).join(" OR ")
+      : `tag:${tag}`;
+
   const params = new URLSearchParams({
-    query: `tag:${tag}`,
+    query,
     page,
     per_page: perPage,
   });
