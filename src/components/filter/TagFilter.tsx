@@ -12,6 +12,7 @@ export function TagFilter({ selectedTag, onTagChange }: Props) {
   return (
     <div className="flex flex-wrap gap-2">
       <Badge
+        render={<button type="button" />}
         variant={selectedTag === ALL_TAG ? "default" : "outline"}
         className="cursor-pointer"
         onClick={() => onTagChange(ALL_TAG)}
@@ -21,6 +22,7 @@ export function TagFilter({ selectedTag, onTagChange }: Props) {
       {DEFAULT_TAGS.map((tag) => (
         <Badge
           key={tag}
+          render={<button type="button" />}
           variant={selectedTag === tag ? "default" : "outline"}
           className="cursor-pointer"
           onClick={() => onTagChange(tag)}
