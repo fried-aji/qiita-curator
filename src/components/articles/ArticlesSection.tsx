@@ -46,7 +46,7 @@ export function ArticlesSection({ tag, page, articles, totalCount }: Props) {
         <motion.div
           key={tag}
           initial={{ opacity: 0 }}
-          animate={{ opacity: isPending ? 0.4 : 1 }}
+          animate={{ opacity: isPending ? 0 : 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
         >
