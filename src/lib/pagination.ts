@@ -7,7 +7,7 @@ export function getPaginationRange(currentPage: number, totalPages: number): num
 
   const half = Math.floor(WINDOW_SIZE / 2);
   let start = Math.max(1, currentPage - half);
-  let end = Math.min(totalPages, start + WINDOW_SIZE - 1);
+  const end = Math.min(totalPages, start + WINDOW_SIZE - 1);
 
   // 末尾に達した場合はstartを調整
   if (end === totalPages) {

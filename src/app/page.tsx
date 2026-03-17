@@ -8,5 +8,5 @@ export default async function Page({
   const { tag = "all", page = "1" } = await searchParams;
   const currentPage = Math.max(1, parseInt(page, 10) || 1);
 
-  return <ArticlesSection tag={tag} page={currentPage} />;
+  return <ArticlesSection key={tag} tag={tag} page={currentPage} />;
 }

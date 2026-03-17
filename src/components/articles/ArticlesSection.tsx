@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { TagFilter } from "@/components/filter/TagFilter";
@@ -22,9 +22,6 @@ export function ArticlesSection({ tag, page }: Props) {
   const [keyword, setKeyword] = useState("");
   const { data, isLoading, isError } = useArticles(tag, page);
 
-  useEffect(() => {
-    setKeyword("");
-  }, [tag]);
 
   const articles = data?.articles ?? [];
   const totalCount = data?.totalCount ?? 0;
