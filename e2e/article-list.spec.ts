@@ -7,8 +7,8 @@ test("トップページが表示される", async ({ page }) => {
 
 test("タグフィルターが存在する", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByText("React")).toBeVisible();
-  await expect(page.getByText("Next.js")).toBeVisible();
+  await expect(page.getByRole("button", { name: "React", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Next.js", exact: true })).toBeVisible();
 });
 
 test("検索フィールドが存在する", async ({ page }) => {
@@ -34,7 +34,7 @@ test("次のページへ遷移できる", async ({ page }) => {
 
 test("タグ切り替えでpage=1にリセットされる", async ({ page }) => {
   await page.goto("/?tag=React&page=2");
-  await page.getByText("Next.js").click();
+  await page.getByRole("button", { name: "Next.js", exact: true }).click();
   await expect(page).toHaveURL(/tag=Next\.js/);
   await expect(page).toHaveURL(/page=1/);
 });
