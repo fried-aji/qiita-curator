@@ -14,7 +14,7 @@ https://qiita-curator.vercel.app/
 | TypeScript | 型安全性の確保 |
 | TanStack Query v5 | APIキャッシュ管理（`staleTime`でQiita APIのレート制限に対応） |
 | Jotai v2 | 状態管理 |
-| shadcn/ui + Tailwind CSS v4 | UIコンポーネントをコードとして管理。|
+| shadcn/ui + Tailwind CSS v4 | スタイリング |
 | Storybook 10 | コンポーネント管理 |
 | MSW v2 | APIモック |
 | Vitest 4 | テストランナー |
