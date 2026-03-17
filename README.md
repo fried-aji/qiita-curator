@@ -1,10 +1,10 @@
-# Qiita Curator
+# 🟢 Qiita Curator
 
 Qiita APIから技術記事を取得し、タグフィルタリング・キーワード検索・ブックマーク機能を提供するWebアプリです。
 
 ## デモ
 
-[Vercel URL]
+https://qiita-curator.vercel.app/
 
 ## 技術スタック
 
