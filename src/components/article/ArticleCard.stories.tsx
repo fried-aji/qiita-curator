@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { ArticleCard } from "./ArticleCard";
 
+type Story = StoryObj<typeof ArticleCard>;
+
 const MOCK_ARTICLE = {
   id: "article-1",
   title: "Reactの基礎：useStateを理解する",
@@ -16,8 +18,6 @@ const meta: Meta<typeof ArticleCard> = {
   component: ArticleCard,
 };
 export default meta;
-
-type Story = StoryObj<typeof ArticleCard>;
 
 export const Default: Story = {
   args: {

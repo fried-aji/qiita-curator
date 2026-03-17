@@ -22,7 +22,6 @@ export function ArticlesSection({ tag, page }: Props) {
   const [keyword, setKeyword] = useState("");
   const { data, isLoading, isError } = useArticles(tag, page);
 
-
   const articles = data?.articles ?? [];
   const totalCount = data?.totalCount ?? 0;
   const totalPages = Math.max(1, Math.ceil(totalCount / PER_PAGE));
@@ -51,7 +50,9 @@ export function ArticlesSection({ tag, page }: Props) {
         >
           {isLoading && <p className="text-center">読み込み中...</p>}
           {isError && (
-            <p className="text-center text-destructive">記事の取得に失敗しました</p>
+            <p className="text-center text-destructive">
+              記事の取得に失敗しました
+            </p>
           )}
           {!isLoading && !isError && (
             <div className="space-y-6">

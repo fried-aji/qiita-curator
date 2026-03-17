@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Pagination } from "./Pagination";
 
+type Story = StoryObj<typeof Pagination>;
+
 const meta: Meta<typeof Pagination> = {
   title: "Pagination/Pagination",
   component: Pagination,
 };
 export default meta;
-
-type Story = StoryObj<typeof Pagination>;
 
 export const Default: Story = {
   args: {

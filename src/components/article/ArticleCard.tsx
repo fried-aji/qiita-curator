@@ -1,15 +1,25 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BookmarkButton } from "@/components/bookmark/BookmarkButton";
 import type { QiitaArticle } from "@/types/qiita";
 
-type Props = {
+interface Props {
   article: QiitaArticle;
   isBookmarked: boolean;
   onBookmarkToggle: (id: string) => void;
-};
+}
 
-export function ArticleCard({ article, isBookmarked, onBookmarkToggle }: Props) {
+export function ArticleCard({
+  article,
+  isBookmarked,
+  onBookmarkToggle,
+}: Props) {
   return (
     <Card>
       <CardHeader>

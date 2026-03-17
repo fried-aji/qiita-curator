@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { ArticleList } from "./ArticleList";
 
+type Story = StoryObj<typeof ArticleList>;
+
 const MOCK_ARTICLES = [
   {
     id: "article-1",
@@ -27,8 +29,6 @@ const meta: Meta<typeof ArticleList> = {
   component: ArticleList,
 };
 export default meta;
-
-type Story = StoryObj<typeof ArticleList>;
 
 export const Default: Story = {
   args: {

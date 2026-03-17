@@ -21,7 +21,12 @@ export async function GET(request: NextRequest) {
     per_page: perPage,
   });
 
-  const res = await fetch(`${QIITA_API_BASE}/items?${params}`);
+  const headers: HeadersInit = {};
+  if (process.env.QIITA_ACCESS_TOKEN) {
+    headers["Authorization"] = `Bearer ${process.env.QIITA_ACCESS_TOKEN}`;
+  }
+
+  const res = await fetch(`${QIITA_API_BASE}/items?${params}`, { headers });
 
   if (!res.ok) {
     return NextResponse.json(

@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { SearchInput } from "./SearchInput";
 
+type Story = StoryObj<typeof SearchInput>;
+
 const meta: Meta<typeof SearchInput> = {
   title: "Filter/SearchInput",
   component: SearchInput,
 };
 export default meta;
-
-type Story = StoryObj<typeof SearchInput>;
 
 export const Default: Story = {
   args: {
