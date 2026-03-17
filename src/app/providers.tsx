@@ -11,10 +11,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 60 * 1000, // 1分間はキャッシュを使用
+            staleTime: 5 * 60 * 1000, // 5分間はキャッシュを使用
           },
         },
-      })
+      }),
   );
 
   return (
