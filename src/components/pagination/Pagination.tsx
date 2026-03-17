@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { getPaginationRange } from "@/lib/pagination";
 
-type Props = {
+interface Props {
   currentPage: number;
   totalPages: number;
   tag: string;
-};
+}
 
 export function Pagination({ currentPage, totalPages, tag }: Props) {
   const pages = getPaginationRange(currentPage, totalPages);

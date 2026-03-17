@@ -1,13 +1,13 @@
-export type QiitaTag = {
+export interface QiitaTag {
   name: string;
-};
+}
 
-export type QiitaUser = {
+export interface QiitaUser {
   id: string;
   profile_image_url: string;
-};
+}
 
-export type QiitaArticle = {
+export interface QiitaArticle {
   id: string;
   title: string;
   url: string;
@@ -15,4 +15,4 @@ export type QiitaArticle = {
   likes_count: number;
   tags: QiitaTag[];
   user: QiitaUser;
-};
+}

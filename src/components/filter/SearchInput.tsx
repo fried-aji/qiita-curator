@@ -1,9 +1,9 @@
 import { Input } from "@/components/ui/input";
 
-type Props = {
+interface Props {
   value: string;
   onChange: (value: string) => void;
-};
+}
 
 export function SearchInput({ value, onChange }: Props) {
   return (

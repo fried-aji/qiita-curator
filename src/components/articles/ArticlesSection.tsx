@@ -12,10 +12,10 @@ import { useBookmark } from "@/hooks/useBookmark";
 import { filterByKeyword } from "@/lib/filter";
 import { PER_PAGE } from "@/lib/qiita";
 
-type Props = {
+interface Props {
   tag: string;
   page: number;
-};
+}
 
 export function ArticlesSection({ tag, page }: Props) {
   const router = useRouter();

@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Bookmark, BookmarkCheck } from "lucide-react";
 
-type Props = {
+interface Props {
   isBookmarked: boolean;
   onClick: () => void;
-};
+}
 
 export function BookmarkButton({ isBookmarked, onClick }: Props) {
   return (

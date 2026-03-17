@@ -3,10 +3,10 @@ import { Badge } from "@/components/ui/badge";
 export const ALL_TAG = "all";
 export const DEFAULT_TAGS = ["React", "Next.js", "TypeScript", "Storybook", "MSW", "Vitest"];
 
-type Props = {
+interface Props {
   selectedTag: string;
   onTagChange: (tag: string) => void;
-};
+}
 
 export function TagFilter({ selectedTag, onTagChange }: Props) {
   return (
