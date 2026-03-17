@@ -8,17 +8,17 @@ https://qiita-curator.vercel.app/
 
 ## 技術スタック
 
-| 技術 | 選定理由 |
+| 技術 | 説明 |
 |------|---------|
 | Next.js 16 (App Router) | SSR/SSGの柔軟な使い分け、ルーティング |
 | TypeScript | 型安全性の確保 |
 | TanStack Query v5 | APIキャッシュ管理（`staleTime`でQiita APIのレート制限に対応） |
-| Jotai v2 | 軽量なglobal state管理。localStorage永続化はatomWithStorageで実現 |
+| Jotai v2 | 状態管理 |
 | shadcn/ui + Tailwind CSS v4 | UIコンポーネントをコードとして管理。|
-| Storybook 10 | コンポーネントの独立した開発・確認環境 |
-| MSW v2 | APIモックによるテスト環境の再現 |
-| Vitest 4 | Viteベースの高速テストランナー |
-| Playwright | E2Eテストによる実際のユーザー操作の検証 |
+| Storybook 10 | コンポーネント管理 |
+| MSW v2 | APIモック |
+| Vitest 4 | テストランナー |
+| Playwright | E2Eテスト |
 
 ## 機能
 
