@@ -31,7 +31,10 @@ export async function fetchArticlesFromQiita(
     headers["Authorization"] = `Bearer ${process.env.QIITA_ACCESS_TOKEN}`;
   }
 
-  const res = await fetch(`${QIITA_API_BASE}/items?${params}`, { headers });
+  const res = await fetch(`${QIITA_API_BASE}/items?${params}`, {
+    headers,
+    next: { revalidate: 300 }, // 5分間サーバーキャッシュ
+  });
 
   if (!res.ok) {
     throw new QiitaApiError(res.status);
