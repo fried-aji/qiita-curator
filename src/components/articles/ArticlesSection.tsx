@@ -34,7 +34,7 @@ export function ArticlesSection({ tag, page }: Props) {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">技術記事</h1>
+      <h2 className="text-2xl font-bold">技術記事</h2>
       <div className="space-y-3">
         <TagFilter
           selectedTag={tag}

@@ -4,7 +4,7 @@ import type { QiitaArticle } from "@/types/qiita";
 interface Props {
   articles: QiitaArticle[];
   bookmarkedIds: string[];
-  onBookmarkToggle: (id: string) => void;
+  onBookmarkToggle: (article: QiitaArticle) => void;
 }
 
 export function ArticleList({

@@ -1,14 +1,13 @@
 "use client";
 
-import { useAtomValue } from "jotai";
-import { bookmarkedIdsAtom } from "@/stores/bookmarkStore";
 import { useBookmark } from "@/hooks/useBookmark";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export default function BookmarksPage() {
-  const bookmarkedIds = useAtomValue(bookmarkedIdsAtom);
-  const { toggle } = useBookmark();
+  const { bookmarks, remove } = useBookmark();
 
-  if (bookmarkedIds.length === 0) {
+  if (bookmarks.length === 0) {
     return (
       <p className="text-center text-muted-foreground py-8">
         ブックマークした記事はありません
@@ -16,25 +15,40 @@ export default function BookmarksPage() {
     );
   }
 
-  // NOTE: ブックマーク一覧はIDのみ保存しているため、
-  // 記事データはlocalStorageか別途API取得が必要。
-  // MVP段階ではID一覧の表示のみとする。
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-bold">ブックマーク ({bookmarkedIds.length}件)</h1>
-      <ul className="space-y-2">
-        {bookmarkedIds.map((id) => (
-          <li key={id} className="flex items-center justify-between border rounded p-3">
-            <span className="text-sm font-mono">{id}</span>
-            <button
-              onClick={() => toggle(id)}
-              className="text-sm text-destructive"
+      <h1 className="text-xl font-bold">ブックマーク ({bookmarks.length}件)</h1>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {bookmarks.map((bookmark) => (
+          <div
+            key={bookmark.articleId}
+            className="border rounded-lg p-4 space-y-3 flex flex-col"
+          >
+            <a
+              href={bookmark.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium hover:underline flex-1"
+            >
+              {bookmark.title}
+            </a>
+            <div className="flex flex-wrap gap-1">
+              {bookmark.tags.map((tag) => (
+                <Badge key={tag} variant="secondary">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => remove(bookmark.articleId)}
             >
               削除
-            </button>
-          </li>
+            </Button>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

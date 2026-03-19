@@ -12,7 +12,7 @@ import type { QiitaArticle } from "@/types/qiita";
 interface Props {
   article: QiitaArticle;
   isBookmarked: boolean;
-  onBookmarkToggle: (id: string) => void;
+  onBookmarkToggle: (article: QiitaArticle) => void;
 }
 
 export function ArticleCard({
@@ -49,7 +49,7 @@ export function ArticleCard({
         </span>
         <BookmarkButton
           isBookmarked={isBookmarked}
-          onClick={() => onBookmarkToggle(article.id)}
+          onClick={() => onBookmarkToggle(article)}
         />
       </CardFooter>
     </Card>

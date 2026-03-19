@@ -43,3 +43,5 @@ storybook-static
 
 # Playwright
 /test-results
+
+/src/generated/prisma
