@@ -44,4 +44,8 @@ storybook-static
 # Playwright
 /test-results
 
+# Prisma
 /src/generated/prisma
+
+# Claude
+/docs
