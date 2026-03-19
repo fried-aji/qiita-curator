@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useSession, signIn } from "next-auth/react";
 import type { QiitaArticle } from "@/types/qiita";
 
 interface BookmarkItem {
@@ -23,6 +24,7 @@ async function fetchBookmarks(): Promise<BookmarkResponse> {
 
 export function useBookmark() {
   const queryClient = useQueryClient();
+  const { status } = useSession();
 
   const { data } = useQuery({
     queryKey: ["bookmarks"],
@@ -132,8 +134,13 @@ export function useBookmark() {
     },
   });
 
-  const toggle = (article: QiitaArticle) =>
+  const toggle = (article: QiitaArticle) => {
+    if (status !== "authenticated") {
+      signIn("google");
+      return;
+    }
     toggleMutation.mutate({ article, adding: !bookmarkedIds.includes(article.id) });
+  };
   const remove = (articleId: string) => removeMutation.mutate(articleId);
   const isBookmarked = (id: string) => bookmarkedIds.includes(id);
 
