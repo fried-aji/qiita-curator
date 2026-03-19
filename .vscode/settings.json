@@ -1,0 +1,26 @@
+{
+  /* Editor > Formatting */
+  "editor.formatOnSave": true,
+  /* Editor > Default Formatter */
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.wordWrap": "on",
+  /* Editor > Code Actions On Save */
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit" // 保存時にESLintで自動修正を有効化
+  },
+  /* Extensions > Emmet */
+  "emmet.includeLanguages": {
+    "tailwindcss": "css"
+  },
+  /* Extensions > Tailwind CSS IntelliSense */
+  // Recommended VS Code Settings
+  // https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss#recommended-vs-code-settings
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  // https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss#tailwindcss.emmetcompletions
+  "tailwindCSS.emmetCompletions": true
+}
