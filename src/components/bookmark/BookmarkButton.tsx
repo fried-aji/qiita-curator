@@ -13,6 +13,7 @@ export function BookmarkButton({ isBookmarked, onClick }: Props) {
       size="sm"
       onClick={onClick}
       aria-label={isBookmarked ? "ブックマーク解除" : "ブックマーク追加"}
+      className="cursor-pointer"
     >
       {isBookmarked ? (
         <BookmarkCheck className="h-4 w-4" />

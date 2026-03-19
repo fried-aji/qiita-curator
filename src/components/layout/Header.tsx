@@ -38,6 +38,7 @@ export function Header() {
                 variant="outline"
                 size="sm"
                 onClick={() => signOut({ redirectTo: "/" })}
+                className="cursor-pointer"
               >
                 ログアウト
               </Button>
@@ -47,6 +48,7 @@ export function Header() {
               variant="outline"
               size="sm"
               onClick={() => signIn("google")}
+              className="cursor-pointer"
             >
               Googleでログイン
             </Button>
