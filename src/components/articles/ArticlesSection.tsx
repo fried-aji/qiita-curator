@@ -3,26 +3,29 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import { Loader2 } from "lucide-react";
 import { TagFilter } from "@/components/filter/TagFilter";
 import { SearchInput } from "@/components/filter/SearchInput";
 import { ArticleList } from "@/components/article/ArticleList";
 import { Pagination } from "@/components/pagination/Pagination";
 import { useBookmark } from "@/hooks/useBookmark";
+import { useArticles } from "@/hooks/useArticles";
 import { filterByKeyword } from "@/lib/filter";
 import { PER_PAGE } from "@/lib/qiita";
-import type { QiitaArticle } from "@/types/qiita";
 
 interface Props {
   tag: string;
   page: number;
-  articles: QiitaArticle[];
-  totalCount: number;
 }
 
-export function ArticlesSection({ tag, page, articles, totalCount }: Props) {
+export function ArticlesSection({ tag, page }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [keyword, setKeyword] = useState("");
+
+  const { data, isLoading } = useArticles(tag, page);
+  const articles = data?.articles ?? [];
+  const totalCount = data?.totalCount ?? 0;
 
   const totalPages = Math.max(1, Math.ceil(totalCount / PER_PAGE));
   const filteredArticles = filterByKeyword(articles, keyword);
@@ -43,28 +46,41 @@ export function ArticlesSection({ tag, page, articles, totalCount }: Props) {
       </div>
 
       <AnimatePresence mode="wait">
-        <motion.div
-          key={tag}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isPending ? 0 : 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-        >
-          <div className="space-y-6">
-            <ArticleList
-              articles={filteredArticles}
-              bookmarkedIds={bookmarkedIds}
-              onBookmarkToggle={toggle}
-            />
-            {totalPages > 1 && (
-              <Pagination
-                currentPage={page}
-                totalPages={totalPages}
-                tag={tag}
+        {isPending || isLoading ? (
+          <motion.div
+            key="loading"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex justify-center py-12"
+          >
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="space-y-6">
+              <ArticleList
+                articles={filteredArticles}
+                bookmarkedIds={bookmarkedIds}
+                onBookmarkToggle={toggle}
               />
-            )}
-          </div>
-        </motion.div>
+              {totalPages > 1 && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={totalPages}
+                  tag={tag}
+                />
+              )}
+            </div>
+          </motion.div>
+        )}
       </AnimatePresence>
     </div>
   );
