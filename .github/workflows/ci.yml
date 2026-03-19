@@ -37,5 +37,6 @@ jobs:
           node-version: 20
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm prisma generate
       - run: pnpm dlx playwright install --with-deps chromium
       - run: pnpm exec playwright test
